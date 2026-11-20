@@ -1,0 +1,12 @@
+{
+  "gui.menu_button_hover": {
+    "category": "master",
+    "sounds": [
+      {
+        "name": "miau:gui/menu_button_hover",
+        "volume": 0.5,
+        "stream": false
+      }
+    ]
+  }
+}

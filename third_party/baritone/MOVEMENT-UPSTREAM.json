@@ -1,0 +1,126 @@
+{
+  "repository": "https://github.com/cabaletta/baritone",
+  "tag": "v1.20.0",
+  "commit": "25111daedf1d59e6a8dfb5a3e61885cdb8d953df",
+  "hashFormat": "SHA-256 of UTF-8 text with LF newlines",
+  "files": [
+    {
+      "path": "src/api/java/baritone/api/pathing/movement/ActionCosts.java",
+      "upstreamSha256": "e4b8798bddfbb06d91f986289bd24ca1ef4c58285b3bc7c39f1788faab35254b",
+      "portedSha256": "e4b8798bddfbb06d91f986289bd24ca1ef4c58285b3bc7c39f1788faab35254b"
+    },
+    {
+      "path": "src/api/java/baritone/api/pathing/movement/IMovement.java",
+      "upstreamSha256": "57b393183670c252efb151b5b02238d2e408ff792f39747acba1d37889951d66",
+      "portedSha256": "30c9ecc00cbaf1725889a84503bb4eb35ad89eef797f2c8288f24b395167f783"
+    },
+    {
+      "path": "src/api/java/baritone/api/utils/Pair.java",
+      "upstreamSha256": "95e195428109eb5f12900badf43e30225462e83a300bf303ac31b64a06f80a5a",
+      "portedSha256": "95e195428109eb5f12900badf43e30225462e83a300bf303ac31b64a06f80a5a"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/CalculationContext.java",
+      "upstreamSha256": "e68298beacc522615fe67308bc5ec82b2abf004e1138a1d9651f8ea3b48c2e44",
+      "portedSha256": "37de517b93193c77a187a1b30ec98ffd3072c94607bcd44388c3f8442b458044"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/Movement.java",
+      "upstreamSha256": "7afd65e0e4272f04cf44308f8ceb16b89bbc3a3ce1bf17e4ab75121e25de4560",
+      "portedSha256": "4c518c83c6d3547cebb39061ff5c865a9b6ff9006c9241b782c704f886a2ca1f"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/MovementHelper.java",
+      "upstreamSha256": "1d2539829d0f8617f886a94235f94cd2085d369c71e3ca93f437d9f895b4cba6",
+      "portedSha256": "aa48e5da56329cde24f59251dfbf549c34932a497fda1c2181df193559fa3e55"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/MovementOption.java",
+      "upstreamSha256": "5410ac10f13014fb1e8f97201d491d9d7ff9803d55e8b26aa40bffecaa845336",
+      "portedSha256": "92858638b124122d3df865c3dc0cca91bd3ba9432ec1a52b8bc664580cb27ebe"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/MovementState.java",
+      "upstreamSha256": "d39bae5d59a5cf2b0aef9d83a0a7cdc5c69a48869e8dcb381f22df1967ea6126",
+      "portedSha256": "d39bae5d59a5cf2b0aef9d83a0a7cdc5c69a48869e8dcb381f22df1967ea6126"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/Moves.java",
+      "upstreamSha256": "50c0a8b95a3847b20653391338629470622ceaf5b48e6b0d640805c798ecdbdf",
+      "portedSha256": "772fdea472d5f103ee48460a7907d4e969e3db97f1635e80b6c75cc12980d446"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementAscend.java",
+      "upstreamSha256": "041b21fa0973dd1aec070e1b5db2eab8185173a79c882db64bea9eac557a7a83",
+      "portedSha256": "ed774f33f10dcf789d1100ae694ded53b581f992a00f86304bda9d6793111511"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementDescend.java",
+      "upstreamSha256": "478de8d9462082d629b2d18a7f1718748cc16c4f110a68b32d5ac422ac5a7cd0",
+      "portedSha256": "e1a5bdca74ce9e87105225ebad81ac84f3ca2cc9731c823d0be28ea674753e5f"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementDiagonal.java",
+      "upstreamSha256": "4e2f22f4b31054667ab90f5b9be11a8c47c31b1448d664dcc90eeb33f1c1d98b",
+      "portedSha256": "8d7e14d51b7fb789fd8dfa8d7a1c172c743b97b43f563517eaf01b7635524973"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementDownward.java",
+      "upstreamSha256": "d67ea2f0035031c63a3234ef65f150d9a01e52ade77e73807fca9072f5438e2a",
+      "portedSha256": "68e0419ce087ffdcfcb72c8dca5f7ed74893ad01fa25721a3179e476f339f5ef"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementFall.java",
+      "upstreamSha256": "a2ebdd30885c4acc421c34ef3acde512eefadcb152f73027eea5d85db2a5681f",
+      "portedSha256": "33f07339ef16e5ecc7bec915fc657905c30d4ed3e5f2221aec4e5c3ac968501b"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementParkour.java",
+      "upstreamSha256": "50648dafcf59ddec2afd965ffde064ab36d908b8df69825795b4a559fdd9ce12",
+      "portedSha256": "93f0ea3cb212930cb57e5f70f0686fc73192250877038680bb5eb481611cb3ef"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementPillar.java",
+      "upstreamSha256": "463e433a70dd056fb024c6e028dca43aeb4241ca19d1c876232d5e2f8a25c093",
+      "portedSha256": "dc8ee102ead923bb109c7e58b1214614b63d538d689a683db140f2aab1ef9b39"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/movement/movements/MovementTraverse.java",
+      "upstreamSha256": "8525599ec108d4955d08502d067036e3acde01545d937c15d2df650ba338eb6d",
+      "portedSha256": "38d9407afaccb99afdae12023c93382ba7fdba7bd23d9e69426d2079fcac87e2"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/path/PathExecutor.java",
+      "upstreamSha256": "d957b2f92fc0f5c47ccd5557d65916d4d18b1fd9d09feadeac05e51b279b73c9",
+      "portedSha256": "a78308155e16190d75af28f16fbf2535520f55ae003c04a9a8d91e818caf75aa"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/precompute/PrecomputedData.java",
+      "upstreamSha256": "5d7b9d733f2a0e827309b3db0207b592c8798ae7721f75d324f047fa3fc2502b",
+      "portedSha256": "5bf5cf0f850cc708dfbe25766783a4066ac8638f5f69c91830a5163444c5ad1e"
+    },
+    {
+      "path": "src/main/java/baritone/pathing/precompute/Ternary.java",
+      "upstreamSha256": "d49661a2494f3ddca14760c79bd51f8c67e064f2ea011c52cdb6fef29e7adb2a",
+      "portedSha256": "d49661a2494f3ddca14760c79bd51f8c67e064f2ea011c52cdb6fef29e7adb2a"
+    }
+  ],
+  "nativeBindings": [
+    {
+      "path": "third_party/baritone/src/main/java/baritone/compat/MovementPlatform189.java",
+      "sha256": "ec129019da0a1668e604eb382ed2673d8ae8479b91722be620317115242fa6d8"
+    },
+    {
+      "path": "src/main/java/idle/miau/baritone/BaritoneBridge.java",
+      "sha256": "e9ff39b4d0d4bc6e8e572157e054bcc14ff9286f97e97443226b62ba1b298bed"
+    },
+    {
+      "path": "src/main/java/idle/miau/baritone/MovementFrame.java",
+      "sha256": "10eec785922c002103ccc2ab16f46f43b66c955530dd6fcf0e9215926c5fc9c2"
+    },
+    {
+      "path": "third_party/baritone/src/main/java/baritone/utils/BlockStateInterface.java",
+      "sha256": "0796b3ee148c251369c04fe15172a941cdbecdd0eb6e29d83b1b881c2aeee0a6"
+    }
+  ]
+}

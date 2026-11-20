@@ -1,0 +1,10 @@
+sourceSets.main.java.srcDirs += [
+        'third_party/baritone/src/api/java',
+        'third_party/baritone/src/main/java'
+]
+sourceSets.main.resources.srcDir 'third_party/baritone/src/main/resources'
+dependencies {
+    implementation 'it.unimi.dsi:fastutil:8.5.13'
+}
+
+sourceSets.main.resources.exclude 'META-INF/services/baritone.api.IBaritoneProvider'

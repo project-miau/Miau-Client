@@ -1,0 +1,18 @@
+package idle.miau.utility.spotify;
+
+public enum MusicProviderStatus {
+    DISCONNECTED,
+    CONNECTING,
+    AUTHORIZING,
+    WAITING_FOR_CALLBACK,
+    EXCHANGING_TOKEN,
+    CONNECTED,
+    PAUSED,
+    RATE_LIMITED,
+    AUTH_EXPIRED,
+    AUTH_DENIED,
+    AUTH_TIMEOUT,
+    NO_ACTIVE_DEVICE,
+    CONNECTION_ERROR,
+    FALLBACK_ACTIVE
+}

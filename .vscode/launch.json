@@ -1,0 +1,18 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "java",
+      "name": "Minecraft Client",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "console": "internalConsole",
+      "stopOnEntry": false,
+      "mainClass": "idle.miau.mcp.launch.MimeowBootstrap",
+      "vmArgs": "-Xms512m -Xmx2G",
+      "args": "--username Developer --uuid 00000000-0000-0000-0000-000000000000 --accessToken 0 --userType legacy --version Miau-dev --gameDir ${workspaceFolder}\\build\\run --assetsDir ${env:APPDATA}\\.minecraft\\assets --assetIndex 1.8 --userProperties {} --width 1280 --height 720",
+      "env": {},
+      "projectName": "MimeowMcp"
+    }
+  ]
+}

@@ -1,0 +1,269 @@
+apply plugin: 'java'
+apply plugin: 'idea'
+
+group = 'idle.miau'
+version = '2.5.3'
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+ext {
+    minecraftVersion = '1.8.9'
+    mcpMappings = 'stable_22'
+    lwjglVersion = '3.3.6'
+    optifineVersion = '1.8.9_HD_U_M6_pre2'
+    launcherVersion = 'Miau'
+}
+
+def configuredValue = { String prop, String env ->
+    project.findProperty(prop)?.toString()?.trim() ?: System.getenv(env)?.trim()
+}
+
+def discordApplicationId = configuredValue('discordApplicationId', 'MIMEOW_DISCORD_APPLICATION_ID') ?: '1512760893895872602'
+def apiBaseUrl = (configuredValue('apiBaseUrl', 'MIAU_API_BASE_URL') ?: 'https://api.getmiau.today').replaceAll('/+$', '')
+def ircWebSocketUrl = configuredValue('ircWebSocketUrl', 'MIAU_IRC_WS_URL') ?: 'wss://irc.getmiau.today/ws'
+
+def generatedBuildVersionDirectory = file("${buildDir}/generated/sources/build-version/java/main")
+
+task generateBuildVersion {
+    inputs.property('clientVersion', project.version.toString())
+    inputs.property('discordApplicationId', discordApplicationId)
+    inputs.property('apiBaseUrl', apiBaseUrl)
+    inputs.property('ircWebSocketUrl', ircWebSocketUrl)
+    outputs.file(file("${generatedBuildVersionDirectory}/idle/miau/BuildVersion.java"))
+    doLast {
+        File output = file("${generatedBuildVersionDirectory}/idle/miau/BuildVersion.java")
+        output.parentFile.mkdirs()
+        output.setText(
+                "package idle.miau;\n\n"
+                        + "public final class BuildVersion {\n"
+                        + "    public static final String VERSION = \"${project.version}\";\n"
+                        + "    public static final String DISCORD_APPLICATION_ID = \"${discordApplicationId}\";\n"
+                        + "    public static final String API_BASE_URL = \"${apiBaseUrl}\";\n"
+                        + "    public static final String IRC_WEBSOCKET_URL = \"${ircWebSocketUrl}\";\n\n"
+                        + "    private BuildVersion() {}\n"
+                        + "}\n",
+                'UTF-8'
+        )
+    }
+}
+
+sourceSets.main.java.srcDir generatedBuildVersionDirectory
+compileJava.dependsOn generateBuildVersion
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://jitpack.io' }
+    maven { url = 'https://libraries.minecraft.net/' }
+    maven { url = 'https://repo.viaversion.com/' }
+}
+
+dependencies {
+    implementation 'org.java-websocket:Java-WebSocket:1.6.0'
+    implementation 'org.slf4j:slf4j-nop:2.0.17'
+    implementation 'org.jetbrains:annotations:24.1.0'
+    implementation 'oshi-project:oshi-core:1.1'
+    implementation 'net.java.dev.jna:jna:3.4.0'
+    implementation 'net.java.dev.jna:platform:3.4.0'
+    implementation('com.github.Vatuu:discord-rpc:1.6.2') { transitive = false }
+    implementation 'com.ibm.icu:icu4j-core-mojang:51.2'
+    implementation 'net.sf.jopt-simple:jopt-simple:4.6'
+    implementation 'io.netty:netty-all:4.0.23.Final'
+    implementation 'com.google.guava:guava:17.0'
+    implementation 'org.apache.commons:commons-lang3:3.3.2'
+    implementation 'commons-io:commons-io:2.4'
+    implementation 'commons-codec:commons-codec:1.9'
+    implementation 'net.java.jutils:jutils:1.0.0'
+    implementation 'com.google.code.gson:gson:2.2.4'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'net.raphimc:MinecraftAuth:5.0.2'
+    implementation 'com.mojang:authlib:1.5.21'
+    implementation 'com.mojang:realms:1.7.59'
+    implementation 'org.apache.commons:commons-compress:1.8.1'
+    implementation 'org.apache.httpcomponents:httpclient:4.3.3'
+    implementation 'commons-logging:commons-logging:1.1.3'
+    implementation 'org.apache.httpcomponents:httpcore:4.3.2'
+    implementation 'org.apache.logging.log4j:log4j-api:2.0-beta9'
+    implementation 'org.apache.logging.log4j:log4j-core:2.0-beta9'
+    implementation 'com.paulscode:codecjorbis:20101023'
+    implementation 'com.paulscode:codecwav:20101023'
+    implementation 'com.paulscode:libraryjavasound:20101123'
+    implementation 'com.paulscode:soundsystem:20120107'
+    implementation('net.java.jinput:jinput:2.0.5') { transitive = false }
+    implementation 'javax.vecmath:vecmath:1.5.2'
+
+    // ViaMCP
+    implementation('com.viaversion:viaversion:5.11.0') { transitive = false }
+    implementation('com.viaversion:viabackwards:5.11.0') { transitive = false }
+    implementation('com.viaversion:viarewind-common:4.1.3') { transitive = false }
+    implementation 'org.yaml:snakeyaml:2.6'
+
+    // LWJGL 3
+    implementation "org.lwjgl:lwjgl:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-glfw:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-opengl:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-openal:${lwjglVersion}"
+    implementation "org.lwjgl:lwjgl-nanovg:${lwjglVersion}"
+    ['natives-windows', 'natives-linux'].each { nativeClassifier ->
+        runtimeOnly "org.lwjgl:lwjgl:${lwjglVersion}:${nativeClassifier}"
+        runtimeOnly "org.lwjgl:lwjgl-glfw:${lwjglVersion}:${nativeClassifier}"
+        runtimeOnly "org.lwjgl:lwjgl-opengl:${lwjglVersion}:${nativeClassifier}"
+        runtimeOnly "org.lwjgl:lwjgl-openal:${lwjglVersion}:${nativeClassifier}"
+        runtimeOnly "org.lwjgl:lwjgl-nanovg:${lwjglVersion}:${nativeClassifier}"
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+    options.release.set(17)
+    options.compilerArgs += ['-proc:none', '-Xlint:none', '-nowarn']
+}
+
+processResources {
+    inputs.property('clientVersion', project.version.toString())
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    filesMatching('version.json') {
+        expand(version: project.version)
+    }
+}
+
+jar.enabled = false
+
+task clientJar(type: Jar) {
+    group = 'build'
+    description = 'Builds the standalone Miau client JAR.'
+    dependsOn classes
+
+    archiveFileName.set("${launcherVersion}.jar")
+    destinationDirectory.set(file("${buildDir}/libs"))
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+
+    manifest {
+        attributes(
+                'Main-Class': 'idle.miau.mcp.launch.MimeowBootstrap',
+                'Implementation-Title': 'Miau MCP',
+                'Implementation-Version': project.version,
+                'Minecraft-Version': minecraftVersion,
+                'Miau-Client-Id': 'miau-1.8.9',
+                'MCP-Mappings': mcpMappings,
+                'LWJGL-Version': lwjglVersion,
+                'OptiFine-Version': optifineVersion,
+                'Build-Java-Version': '17'
+        )
+    }
+
+    from sourceSets.main.output
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    from('license') {
+        into 'META-INF/licenses'
+        rename { 'Minecraft-1.8.9-lwjgl3-LICENSE.txt' }
+    }
+    from('src/native/notifications/third_party/nanovg/LICENSE.txt') {
+        into 'META-INF/licenses'
+        rename { 'NanoVG-LICENSE.txt' }
+    }
+
+    exclude 'META-INF/*.SF'
+    exclude 'META-INF/*.DSA'
+    exclude 'META-INF/*.RSA'
+    exclude 'META-INF/maven/**'
+    exclude 'META-INF/versions/**'
+    exclude 'module-info.class'
+    exclude '**/module-info.class'
+    exclude 'com/mojang/patchy/**'
+    exclude 'plugin.yml'
+    exclude 'bungee.yml'
+    exclude 'velocity-plugin.json'
+    exclude 'META-INF/sponge_plugins.json'
+    exclude 'com/viaversion/viaversion/bukkit/**'
+    exclude 'com/viaversion/viaversion/velocity/**'
+    exclude 'com/viaversion/viaversion/*Plugin*.class'
+    exclude 'com/viaversion/viabackwards/fabric/**'
+    exclude 'com/viaversion/viabackwards/listener/**'
+    exclude 'com/viaversion/viabackwards/ViaFabricAddon.class'
+    exclude 'com/viaversion/viabackwards/*Plugin*.class'
+    exclude 'com/viaversion/viarewind/*Plugin*.class'
+    exclude 'net/raphimc/minecraftauth/msa/service/impl/JfxWebViewMsaAuthService.class'
+    exclude 'net/lenni0451/commons/httpclient/executor/extra/**'
+    exclude 'okhttp3/internal/platform/android/**'
+    exclude 'okhttp3/internal/platform/Android*'
+    exclude 'okhttp3/internal/platform/ConscryptPlatform*'
+    exclude 'okhttp3/internal/platform/BouncyCastlePlatform*'
+    exclude 'okhttp3/internal/platform/OpenJSSEPlatform*'
+}
+
+task prepareLauncherVersion {
+    group = 'build'
+    description = 'Prepares launcher version JSON and JAR.'
+    dependsOn clientJar
+
+    File outputDir = file("${buildDir}/launcher/${launcherVersion}")
+    inputs.file { clientJar.archiveFile.get().asFile }
+    inputs.file file("json/${launcherVersion}/${launcherVersion}.json")
+    outputs.dir outputDir
+
+    doLast {
+        delete outputDir
+        outputDir.mkdirs()
+        copy {
+            from clientJar.archiveFile.get().asFile
+            into outputDir
+            rename { "${launcherVersion}.jar" }
+        }
+
+        File metadataFile = file("json/${launcherVersion}/${launcherVersion}.json")
+        String metadata = metadataFile.getText('UTF-8')
+        String manifestMainClass = 'idle.miau.mcp.launch.MimeowBootstrap'
+
+        def mainClassPattern = java.util.regex.Pattern.compile('(?s)("mainClass"\\s*:\\s*")[^"]*(")')
+        def mainClassMatcher = mainClassPattern.matcher(metadata)
+        if (mainClassMatcher.find()) {
+            String replacement = mainClassMatcher.group(1) + manifestMainClass + mainClassMatcher.group(2)
+            StringBuffer rewritten = new StringBuffer()
+            mainClassMatcher.appendReplacement(rewritten, java.util.regex.Matcher.quoteReplacement(replacement))
+            mainClassMatcher.appendTail(rewritten)
+            new File(outputDir, "${launcherVersion}.json").setText(rewritten.toString(), 'UTF-8')
+        }
+        println "Launcher version prepared at ${outputDir}"
+    }
+}
+
+def clientDevGameDir = file(project.findProperty('clientGameDir') ?: 'run')
+def defaultMinecraftDirectory = System.getenv('APPDATA')
+        ? new File(System.getenv('APPDATA'), '.minecraft')
+        : new File(System.getProperty('user.home'), '.minecraft')
+def clientDevAssetsDir = file(project.findProperty('clientAssetsDir') ?: new File(defaultMinecraftDirectory, 'assets'))
+def clientDevUsername = (project.findProperty('clientUsername') ?: 'Developer').toString()
+
+task prepareDevRun {
+    group = 'application'
+    description = 'Prepares development game directory.'
+    doLast {
+        if (!clientDevGameDir.exists()) clientDevGameDir.mkdirs()
+    }
+}
+
+task runClient(type: JavaExec) {
+    group = 'application'
+    description = 'Runs the standalone MCP client in development mode.'
+    dependsOn classes, prepareDevRun
+    mainClass.set('idle.miau.mcp.launch.MimeowBootstrap')
+    classpath = sourceSets.main.runtimeClasspath
+    workingDir clientDevGameDir
+    jvmArgs '-Xms512m', '-Xmx2G', '-XX:-OmitStackTraceInFastThrow'
+    args '--username', clientDevUsername,
+            '--uuid', '00000000-0000-0000-0000-000000000000',
+            '--accessToken', '0',
+            '--userType', 'legacy',
+            '--version', 'Miau-dev',
+            '--gameDir', clientDevGameDir.absolutePath,
+            '--assetsDir', clientDevAssetsDir.absolutePath,
+            '--assetIndex', '1.8',
+            '--userProperties', '{}',
+            '--width', '1280',
+            '--height', '720'
+}
+
+build.dependsOn prepareLauncherVersion
+
+apply from: 'third_party/baritone/baritone.gradle'
