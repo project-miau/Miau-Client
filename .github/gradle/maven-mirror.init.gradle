@@ -1,0 +1,28 @@
+import org.gradle.api.artifacts.dsl.RepositoryHandler
+import org.gradle.api.artifacts.repositories.ArtifactRepository
+import org.gradle.api.artifacts.repositories.MavenArtifactRepository
+
+final String GOOGLE_MAVEN_CENTRAL_MIRROR = 'https://maven-central.storage-download.googleapis.com/maven2/'
+
+def redirectMavenCentral = { RepositoryHandler repos ->
+    repos.all { ArtifactRepository repo ->
+        if (repo instanceof MavenArtifactRepository) {
+            String url = repo.url?.toString()
+            if (url != null && (url.contains('repo.maven.apache.org/maven2') || url.contains('repo1.maven.org/maven2'))) {
+                repo.setUrl(GOOGLE_MAVEN_CENTRAL_MIRROR)
+            }
+        }
+    }
+}
+
+gradle.settingsEvaluated { settings ->
+    redirectMavenCentral(settings.pluginManagement.repositories)
+    redirectMavenCentral(settings.dependencyResolutionManagement.repositories)
+}
+
+allprojects {
+    buildscript {
+        redirectMavenCentral(repositories)
+    }
+    redirectMavenCentral(repositories)
+}

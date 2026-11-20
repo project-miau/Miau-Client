@@ -29,13 +29,13 @@ jobs:
           java-version: "17"
 
       - name: Set up Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
 
       - name: Ensure gradlew is executable
         run: chmod +x ./gradlew
 
       - name: Build client JAR
-        run: ./gradlew clientJar --no-daemon --console=plain
+        run: ./gradlew clientJar --no-daemon --console=plain --init-script .github/gradle/maven-mirror.init.gradle
 
       - name: Upload client artifact
         uses: actions/upload-artifact@v4

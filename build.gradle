@@ -52,10 +52,28 @@ sourceSets.main.java.srcDir generatedBuildVersionDirectory
 compileJava.dependsOn generateBuildVersion
 
 repositories {
-    mavenCentral()
-    maven { url = 'https://jitpack.io' }
+    exclusiveContent {
+        forRepository {
+            maven { url = 'https://jitpack.io' }
+        }
+        filter {
+            includeGroup 'com.github.Vatuu'
+        }
+    }
+    exclusiveContent {
+        forRepository {
+            maven { url = 'https://repo.viaversion.com/' }
+        }
+        filter {
+            includeGroup 'com.viaversion'
+        }
+    }
+    maven {
+        name = 'GoogleMavenCentralMirror'
+        url = 'https://maven-central.storage-download.googleapis.com/maven2/'
+    }
     maven { url = 'https://libraries.minecraft.net/' }
-    maven { url = 'https://repo.viaversion.com/' }
+    mavenCentral()
 }
 
 dependencies {
